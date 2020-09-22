@@ -6,7 +6,11 @@
 
     <groupId>org.lili.security</groupId>
     <artifactId>java-security-practice</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>ArtOfEncryptionAndDecryption</module>
+    </modules>
 
     <dependencies>
 
