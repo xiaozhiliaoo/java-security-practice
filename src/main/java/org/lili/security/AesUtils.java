@@ -11,9 +11,9 @@ public class AesUtils {
     }
 
     //初始化向量，aes 16位
-    private static final String INIT_VECTOR = "chainupsecret123";
+    private static final String INIT_VECTOR = "cccc";
 
-    private static final String password = "chainupsecret";
+    private static final String password = "cccc";
 
     //二进制转变为16进制
     private static String parseByte2HexStr(byte[] buf) {
@@ -68,14 +68,7 @@ public class AesUtils {
         return encrypt(content, password);
     }
 
-    /**
-     * 通过密码加密
-     *
-     * @param content 需要加密的内容
-     * @param pwd 密码最大长度16位，可以包含数字，大小写
-     * @return
-     * @throws Exception 客户端应该处理该异常
-     */
+
     public static String encrypt(String content, String pwd) throws Exception {
         String keyWord = addSuffix(pwd);
         SecretKeySpec key = new SecretKeySpec(keyWord.getBytes(), "AES");

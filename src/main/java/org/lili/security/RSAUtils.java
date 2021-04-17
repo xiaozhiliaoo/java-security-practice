@@ -4,7 +4,6 @@ package org.lili.security;
 import javax.crypto.Cipher;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.cert.Certificate;
@@ -13,9 +12,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
-/**
- * @author yufan
- */
+
 public class RSAUtils {
     private static final String KEY_ALGORITHM = "RSA";
     public static final String SIGNATURE_ALGORITHM = "SHA256withRSA";
@@ -39,7 +36,7 @@ public class RSAUtils {
      * @return base64密文
      * @throws Exception 加密异常
      */
-    public static String encryptByPub(String hash, String publicKey) throws Exception{
+    public static String encryptByPub(String hash, String publicKey) throws Exception {
         PublicKey pub = KeyFactory.getInstance(KEY_ALGORITHM).generatePublic(new X509EncodedKeySpec(Base64.getDecoder().decode(publicKey)));
         Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
         cipher.init(Cipher.ENCRYPT_MODE, pub);
@@ -55,7 +52,7 @@ public class RSAUtils {
      * @return 解密后明文
      * @throws Exception 解密异常
      */
-    public static String decryptByPub(String encode, String publicKey) throws Exception{
+    public static String decryptByPub(String encode, String publicKey) throws Exception {
         PublicKey pub = KeyFactory.getInstance(KEY_ALGORITHM).generatePublic(new X509EncodedKeySpec(Base64.getDecoder().decode(publicKey)));
         Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
         cipher.init(Cipher.DECRYPT_MODE, pub);
@@ -70,7 +67,7 @@ public class RSAUtils {
      * @return 解密后明文
      * @throws Exception 解密异常
      */
-    public static String decryptByPrv(String encode, String privateKey) throws Exception{
+    public static String decryptByPrv(String encode, String privateKey) throws Exception {
         PrivateKey prv = KeyFactory.getInstance(KEY_ALGORITHM).generatePrivate(new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKey)));
         Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
         cipher.init(Cipher.DECRYPT_MODE, prv);
@@ -84,7 +81,7 @@ public class RSAUtils {
      * @return base64密文
      * @throws Exception 加密异常
      */
-    public static String encryptByPrv(String hash, String privateKey) throws Exception{
+    public static String encryptByPrv(String hash, String privateKey) throws Exception {
         PrivateKey prv = KeyFactory.getInstance(KEY_ALGORITHM).generatePrivate(new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKey)));
         Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
         cipher.init(Cipher.ENCRYPT_MODE, prv);
@@ -95,6 +92,7 @@ public class RSAUtils {
 
     /**
      * 签名
+     *
      * @param key         私钥
      * @param requestData 请求参数
      * @return
@@ -120,6 +118,7 @@ public class RSAUtils {
 
     /**
      * 解码PrivateKey
+     *
      * @param key
      * @return
      */
@@ -142,10 +141,11 @@ public class RSAUtils {
 
     /**
      * 解码publicKey
+     *
      * @param key
      * @return
      */
-    public static PublicKey getPublicKey(String key){
+    public static PublicKey getPublicKey(String key) {
         try {
 //            byte[] keyBytes;
 //            keyBytes = (new BASE64Decoder()).decodeBuffer(key);
@@ -156,19 +156,17 @@ public class RSAUtils {
             byte[] certder = Base64.getDecoder().decode(key);
             InputStream certstream = new ByteArrayInputStream(certder);
             Certificate cert = CertificateFactory.getInstance("X.509").generateCertificate(certstream);
+            //没有获取私钥方法
             PublicKey publicKey = cert.getPublicKey();
             return publicKey;
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
     /**
-     * 私钥签名 -- Myinfo
-     * @param baseString
-     * @param privateKey
-     * @return
+     * 私钥签名
      */
     public static String createSHA256withRSASignature(String baseString, PrivateKey privateKey) {
         try {
@@ -177,13 +175,7 @@ public class RSAUtils {
             rsa.update(baseString.getBytes("UTF-8"));
             byte[] signature = rsa.sign();
             return Base64.getEncoder().encodeToString(signature);
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (SignatureException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

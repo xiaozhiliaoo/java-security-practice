@@ -180,8 +180,7 @@ public final class RSAEngine {
         // 得到私钥
         Key privateKey = keyPair.getPrivate();
         String privateKeyStr = new String(Base64.encodeBase64(privateKey.getEncoded()));
-//        return PubPriPair.builder().privateKey(privateKeyStr).publicKey(publicKeyStr).build();
-        return null;
+        return PubPriPair.builder().privateKey(privateKeyStr).publicKey(publicKeyStr).build();
     }
 
     // 公钥加密
