@@ -1,7 +1,7 @@
 /**
  * 2009-5-20
  */
-package s4.s1;
+package ch10.s4.s1;
 
 import org.apache.commons.codec.binary.Hex;
 import org.junit.Test;
