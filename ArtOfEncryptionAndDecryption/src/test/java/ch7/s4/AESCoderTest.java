@@ -32,4 +32,16 @@ public class AESCoderTest {
         // 校验
         assertEquals(inputStr, outputStr);
     }
+
+    @Test
+    public void initKey() throws Exception {
+        String inputStr = "AES";
+        byte[] inputData = inputStr.getBytes();
+        System.err.println("原文： \t" + inputStr);
+        // 初始化秘钥
+        byte[] key = AESCoder.initKey(192);
+        String privateKey = Base64.encodeBase64String(key);
+        System.err.println("秘钥: \t" + privateKey);
+        assertEquals(32, privateKey.length());
+    }
 }

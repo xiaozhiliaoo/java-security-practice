@@ -89,4 +89,19 @@ public abstract class AESCoder {
         // 获得秘钥的二进制编码形式
         return secretKey.getEncoded();
     }
+
+
+    public static byte[] initKey(int keysize) throws Exception {
+        if (keysize != 128 && keysize != 192 && keysize != 256) {
+            throw new IllegalArgumentException("keysize: must be equal to 128, 192 or 256");
+        }
+        // 实例化
+        KeyGenerator kg = KeyGenerator.getInstance(KEY_ALGORITHM);
+        // AES要求秘钥长度为128位，192位或256位
+        kg.init(keysize);
+        // 生成秘密秘钥
+        SecretKey secretKey = kg.generateKey();
+        // 获得秘钥的二进制编码形式
+        return secretKey.getEncoded();
+    }
 }
